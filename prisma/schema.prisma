@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Type {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+  pokemonCard PokemonCard[]
+}
+
+model PokemonCard {
+  id Int @id 
+  name String @unique
+  pokedexId Int @unique
+  type Type @relation(fields: [typeId], references: [id])
+  typeId Int
+  lifePoints Int
+  size Float?
+  weight Float?
+  imageUrl String ?
+
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+}
